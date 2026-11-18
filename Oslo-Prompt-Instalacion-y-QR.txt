@@ -1,0 +1,49 @@
+INSTRUCCIONES PARA PREPARAR Y ABRIR OSLO
+========================================
+
+Copia y pega este mensaje en tu agente cuando quieras que prepare Oslo en tu
+computadora:
+
+"Quiero que prepares y abras el proyecto Oslo en esta computadora. No me des
+solo instrucciones: revisa la estructura del proyecto y realiza los pasos que
+puedas desde el entorno disponible.
+
+1. INSTALA LAS DEPENDENCIAS DE ESCRITORIO
+   - En `apps/desktop`, instala las dependencias de Python usando el archivo
+     `requirements.txt`.
+   - Usa el Python disponible en el sistema. No borres ni reemplaces bases de
+     datos existentes.
+
+2. INSTALA LAS DEPENDENCIAS MÓVILES
+   - En `apps/mobile`, ejecuta `npm install`.
+   - Si ya están instaladas, verifica que coincidan con `package-lock.json`.
+
+3. INICIA LA CAJA DE ESCRITORIO
+   - Ejecuta `apps/desktop/Iniciar Oslo.bat` y confirma si la ventana de Oslo
+     quedó abierta.
+
+4. INICIA EL LECTOR MÓVIL Y MUESTRA SU QR
+   - Desde `apps/mobile`, inicia Expo con `npm start`.
+   - Déjalo ejecutándose y muéstrame el QR de Expo que abre la aplicación móvil
+     en Expo Go.
+   - Si hace falta limpiar la caché, detén Expo y vuelve a iniciarlo con
+     `npm start -- --clear`.
+
+IMPORTANTE: El QR que necesito es el QR de Expo para abrir Oslo en el móvil.
+No es el QR que aparece dentro de la caja en “Punto de Venta > Conectar móvil”;
+ese segundo QR sirve para vincular el teléfono con la caja después de abrir la
+app.
+
+No inventes un QR ni una dirección IP. Si el QR de Expo no puede conectarse,
+indica el mensaje exacto, comprueba que teléfono y computadora estén en la misma
+Wi-Fi y dime qué permiso de red hace falta. No expongas los puertos del proyecto
+a Internet. Al terminar, dime qué quedó abierto y cuál QR debo escanear primero."
+
+ORDEN PARA EL USUARIO
+---------------------
+1. Abre Oslo en el teléfono escaneando primero el QR de Expo con Expo Go.
+2. Ya dentro de Oslo, usa la app para escanear el QR de vinculación que muestra
+   la caja de escritorio.
+
+El QR de Expo puede cambiar cada vez que se inicia el servidor móvil. El QR de
+vinculación se genera desde la caja y conecta el teléfono con esa computadora.
