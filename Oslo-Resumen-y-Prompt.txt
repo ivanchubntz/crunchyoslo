@@ -64,7 +64,7 @@ Teléfono / Oslo móvil             Computadora / Oslo escritorio
 -----------------------------------
 Copia y adapta este prompt:
 
-"Crea un proyecto llamado Oslo para administrar ventas e inventario. Debe
+"Crea un proyecto llamado {NOMBRE DE PREFERENCIA} para administrar ventas e inventario. Debe
 incluir una aplicación de escritorio para Windows hecha con Python, Tkinter y
 SQLite, y una aplicación móvil hecha con Expo y React Native que use la cámara
 para leer códigos de barras. El teléfono debe funcionar como lector; el catálogo,
