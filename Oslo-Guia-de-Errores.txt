@@ -1,0 +1,108 @@
+OSLO — GUIA DE ERRORES Y SOLUCIONES
+===================================
+
+Esta guía cubre los problemas más comunes al instalar, abrir y vincular Oslo.
+Primero identifica cuál de estos dos QR estás usando:
+
+1. QR DE EXPO: aparece al ejecutar `npm start`. Abre la aplicación móvil.
+2. QR DE VINCULACIÓN: aparece en la caja, en Punto de Venta > Conectar móvil.
+   Se escanea desde Oslo para conectar el teléfono con la computadora.
+
+Son QR distintos y se usan en momentos diferentes.
+
+ANTES DE EMPEZAR
+----------------
+- La caja requiere Windows 10/11, Python 3 con Tcl/Tk y sus dependencias.
+- El lector requiere Node.js 22.13 o posterior, npm y Expo Go compatible con SDK 58,
+  o una compilación de desarrollo.
+- Para la conexión local, teléfono y computadora deben estar en la misma Wi-Fi.
+- La caja usa el puerto 8765. Expo usa normalmente el puerto 8081 durante el desarrollo.
+
+1. `npm` NO SE RECONOCE O NO PUEDE INICIAR
+-----------------------------------------
+Causa probable: Node.js no está instalado o la terminal se abrió antes de instalarlo.
+
+Solución:
+1. Instala Node.js 22.13 o posterior.
+2. Cierra y vuelve a abrir PowerShell.
+3. Entra a la carpeta `apps/mobile` del proyecto.
+4. Ejecuta:
+
+   npm install
+   npm start
+
+2. EL QR DE EXPO NO APARECE O EXPO GO DICE QUE LA PÁGINA NO EXISTE
+------------------------------------------------------------------
+Comprueba que el servidor de Expo siga ejecutándose en la computadora y que el móvil y la computadora estén conectados a la misma red Wi-Fi. Escanea el QR de Expo, no el QR de vinculación de la caja.
+
+Si no se resuelve:
+1. En la terminal de Expo, detén el servidor con Ctrl+C.
+2. Desde `apps/mobile`, ejecuta:
+
+   npm start -- --clear
+
+3. Escanea el QR nuevo.
+4. Si Windows pregunta, permite `node.exe` en redes privadas. El servidor de Expo usa el puerto 8081 normalmente.
+
+Algunas redes de invitados, VPN o puntos de acceso aíslan los dispositivos. Prueba una Wi-Fi privada donde teléfono y computadora puedan comunicarse entre sí.
+
+3. EXPO GO DICE “PROJECT IS INCOMPATIBLE…”
+-----------------------------------------
+El proyecto Oslo usa Expo SDK 58. Expo Go incluye un SDK concreto y debe coincidir con el SDK del proyecto.
+
+- En Android, instala Expo Go compatible con SDK 58. Si la versión de la tienda no coincide, consulta https://expo.dev/go para una versión compatible.
+- En iPhone/iPad, la versión de Expo Go de App Store puede no incluir SDK 58.
+  Para SDK 58, consulta la guía oficial de Expo para usar una compilación de desarrollo distribuida mediante TestFlight.
+- No cambies la versión del proyecto al azar. Comprueba primero el mensaje exacto y el SDK en `apps/mobile/package.json`.
+
+Guía oficial:
+https://docs.expo.dev/troubleshooting/expo-go-version-mismatch/
+
+4. OSLO ABRE EN EL TELÉFONO, PERO NO SE CONECTA CON LA CAJA
+----------------------------------------------------------
+Comprueba lo siguiente:
+- La aplicación de escritorio Oslo permanece abierta.
+- Teléfono y computadora usan la misma red local.
+- Escaneaste el QR que muestra la caja desde Oslo, no desde Expo Go ni desde la cámara normal del teléfono.
+- Si Windows lo solicita, permite Python en redes privadas. La caja usa el puerto 8765 para recibir los códigos.
+- Si la computadora cambió de Wi-Fi o de dirección de red, cierra la ventana de conexión y vuelve a mostrar el QR desde la caja.
+
+No abras el puerto 8765 a Internet ni lo reenvíes desde el router. Evita compartir una foto del QR de vinculación o de la clave temporal: dan acceso a esa sesión.
+
+5. LA CÁMARA NO ESCANEA
+-----------------------
+- Acepta el permiso de cámara cuando el teléfono lo solicite.
+- Si lo rechazaste, abre los ajustes del teléfono, busca Oslo y habilita Cámara.
+- Cierra y vuelve a abrir Oslo después de cambiar el permiso.
+- Asegúrate de que el código esté enfocado y tenga suficiente luz.
+
+6. EL PRODUCTO NO APARECE
+-------------------------
+- Confirma que el código de barras esté guardado en el producto; el SKU y el código de barras son campos distintos.
+- Revisa que el código coincida exactamente, incluidos los ceros iniciales.
+- Si no existe en el catálogo, utiliza el formulario de alta que ofrece la caja.
+
+Una lectura por sí sola no registra una venta ni descuenta existencias. El cajero debe revisar y confirmar la venta en la computadora.
+
+7. LA CAJA NO INICIA
+--------------------
+- Comprueba que Python 3 para Windows esté instalado con Tcl/Tk.
+- Instala las dependencias desde `apps/desktop`:
+
+   python -m pip install --user -r requirements.txt
+
+- Vuelve a abrir `Iniciar Oslo.bat`.
+- Si Windows bloquea la conexión móvil, permite Python en la red privada. La caja puede seguir utilizándose aunque el lector no esté conectado.
+
+QUÉ INFORMACIÓN COMPARTIR PARA PEDIR AYUDA
+------------------------------------------
+Comparte el texto exacto del error, indica si usas Android o iPhone, y di en qué paso aparece: abrir Expo, iniciar Oslo, vincular el móvil o escanear un producto.
+Puedes adjuntar una captura, pero oculta la clave temporal y el QR de vinculación.
+
+REFERENCIAS DE EXPO
+-------------------
+Inicio en dispositivo físico:
+https://docs.expo.dev/get-started/start-developing/
+
+Compatibilidad entre Expo Go y el SDK del proyecto:
+https://docs.expo.dev/troubleshooting/expo-go-version-mismatch/

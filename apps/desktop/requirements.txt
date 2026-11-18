@@ -1,0 +1,3 @@
+# Required to display a pairing QR in the desktop app. Without it, pairing
+# details remain available as text.
+qrcode[pil]>=8.2,<9

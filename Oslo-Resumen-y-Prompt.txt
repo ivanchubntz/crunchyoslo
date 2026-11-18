@@ -1,0 +1,87 @@
+OSLO — RESUMEN DEL PROYECTO
+===========================
+
+1. COMO SE DESARROLLO
+---------------------
+Necesidad
+   │ Escanear productos con el teléfono y cobrar desde la computadora
+   ▼
+Diseño del flujo
+   │ Producto conocido → seleccionarlo en la venta
+   │ Código desconocido → permitir alta manual
+   ▼
+Aplicación de escritorio
+   │ Caja, inventario y base de datos local
+   ▼
+Puente de red local
+   │ QR de vinculación + clave temporal + recepción de códigos
+   ▼
+Aplicación móvil
+   │ Cámara para vincularse y leer códigos de barras
+   ▼
+Integración y documentación
+     Confirmación de venta, actualización de stock e instrucciones
+
+2. ESTRUCTURA DEL PROGRAMA
+--------------------------
+Oslo/
+├── README.md                 Guía general del proyecto
+├── docs/
+│   ├── PRODUCT.md            Objetivo, reglas y alcance
+│   └── ARCHITECTURE.md       Componentes y comunicación
+└── apps/
+    ├── desktop/              Caja para Windows: Python + Tkinter
+    │   ├── app.pyw            Interfaz principal
+    │   ├── local_service.py   Servicio HTTP local para el móvil
+    │   ├── oslo/
+    │   │   ├── db.py          Base SQLite y esquema
+    │   │   ├── inventario.py  Productos y códigos de barras
+    │   │   ├── ventas.py      Clientes y ventas
+    │   │   ├── compras.py     Proveedores y compras
+    │   │   ├── finanzas.py    Ingresos y egresos
+    │   │   └── agenda.py      Agenda y notas
+    │   └── Iniciar Oslo.bat   Inicio rápido en Windows
+    └── mobile/               Lector para Android/iOS: Expo + React Native
+        ├── App.js             Cámara, vinculación y envío de lecturas
+        ├── app.json           Nombre y permisos de la app
+        └── package.json       Dependencias y comandos
+
+3. COMO FUNCIONA DURANTE UNA VENTA
+----------------------------------
+Teléfono / Oslo móvil             Computadora / Oslo escritorio
+        │                                      │
+        ├── Escanea QR de vinculación ────────►│ Servicio local valida la sesión
+        │                                      │
+        ├── Lee el código de barras ──────────►│ Busca el código en SQLite
+        │                                      │
+        │                         Producto existe: lo selecciona en la venta
+        │                         Producto nuevo: permite registrarlo
+        │                                      │
+        │                         Cajero confirma la venta
+        │                         Se actualizan venta, ingresos y existencias
+
+4. PROMPT PARA REPLICAR EL PROYECTO
+-----------------------------------
+Copia y adapta este prompt:
+
+"Crea un proyecto llamado Oslo para administrar ventas e inventario. Debe
+incluir una aplicación de escritorio para Windows hecha con Python, Tkinter y
+SQLite, y una aplicación móvil hecha con Expo y React Native que use la cámara
+para leer códigos de barras. El teléfono debe funcionar como lector; el catálogo,
+los clientes, el inventario y las ventas deben permanecer en la computadora.
+
+Vincula móvil y escritorio mediante un QR de sesión temporal dentro de la misma
+red local. Implementa un pequeño servicio HTTP local con una clave aleatoria por
+sesión. Al recibir un código, busca el producto por su código de barras: si existe,
+selecciónalo en el punto de venta y muestra nombre, precio y existencias; si no
+existe, permite darlo de alta manualmente con el código leído ya completado.
+
+Mantén el código de barras como texto, separado del SKU, para preservar ceros
+iniciales. No registres la venta ni descuentes stock hasta que el cajero la
+confirme desde la computadora. Incluye gestión de productos, clientes, compras,
+proveedores, ventas, finanzas, historial, agenda y notas. Organiza el repositorio
+en apps/desktop, apps/mobile y docs; añade README con requisitos, instalación,
+inicio, generación del QR de Expo y vinculación del QR de la caja. Excluye del
+control de versiones las bases de datos, secretos, cachés y dependencias
+instaladas. Usa nombres genéricos y no incluyas datos personales ni direcciones
+IP fijas."
